@@ -1,0 +1,43 @@
+<header><%- include("navbar.ejs")%></header>
+<section  style="height:85vh; background-color: rgb(42, 40, 40);"> 
+<div class="table-responsive">
+<table class="table table-hover table-striped table-success table-bordered"> 
+    <thead class="table-dark">
+        <tr class="p-4">
+            <th>Habit Name</th>
+            <% for(let d of days){%>
+            <th><%=d%></th>
+            <%}%>
+        </tr>
+    </thead>
+<tbody>
+<% for(let habit of habits){ %>
+<tr>
+<th> <%= habit.description %> </th>
+<% for(let i = 0 ; i<habit.days.length;i++) {%>
+<td>
+<div class="btn-group dropend p-2">
+    <!-- change button color acc to the status -->
+    <%let color= "secondary"%>
+    <%if(habit.days[i]=='Done'){%>
+            <% color = "success"%>
+        <%}else if(habit.days[i]=='Not Done'){%>
+            <% color = "danger"%>
+            <%}%>
+    <button class="btn btn-<%=color%> dropdown-toggle " type="button"  data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><%= habit.days[i] %></button>
+    <ul style="z-index: 99!important"class="dropdown-menu index" aria-labelledby="dropdownMenuButton" style="z-index: 2;">
+    <li><a class="dropdown-item " href="/habit/update/<%= habit.id %>/<%= i %>/Done ">Done</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="/habit/update/<%= habit.id %>/<%= i %>/Not%20Done ">Not Done</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><a class="dropdown-item" href="/habit/update/<%= habit.id %>/<%= i %>/None ">None</a></li>
+    </ul>
+</div>  
+</td>
+<% } %>
+</tr>
+<% }%>
+</tbody>
+    </table>
+</div>
+</section>
